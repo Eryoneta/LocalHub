@@ -1,0 +1,50 @@
+<html>
+
+<head>
+	<title id="title"></title>
+	<link rel="icon" id="icon">
+	</link>
+	<!-- Deve ser relativo ao "LH.html"! -->
+	<script src="./LHFactory/LHCore/lhcore.js"></script>
+	<script>
+		LHCore.createRoutes([
+			{ url: "", path: "C:/Users/erick.yoneta/Documents/Workspace/TestArea/Hub1.html" },
+			{ url: "teste", path: "C:/Users/erick.yoneta/Documents/Workspace/TestArea/Hub2.html" },
+		]);
+
+		function load() {
+			const titulo = LHCore.bindVariable("titulo");
+			titulo.value = "Teste";
+
+			const mainView = LHCore.bindView("main");
+			window.addEventListener("message", (data) => {
+				switch (data.request) {
+					case "changeTitle":
+						LHCore.getById("title").innerHTML = data.value;
+						break;
+					case "changeIcon":
+						LHCore.getById("icon").href = data.value;
+						break;
+				}
+			});
+			window.addEventListener("hashchange", (hash) => reloadPage());
+			reloadPage();
+		}
+		function reloadPage() {
+			const urlAtual = window.location.hash;
+			console.log(urlAtual);
+			// mainWindow.src = routes.find(route => route.url === urlAtual);
+			// mainWindow.addListener("load", () => {
+			// 	mainWindow.postMessage(JSON.stringfy(routes), "*");
+			// });
+		}
+	</script>
+</head>
+
+<body onload="load()">
+	<lh-var titulo></lh-var>
+	<br>
+	<iframe main></iframe>
+</body>
+
+</html>
