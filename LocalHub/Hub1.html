@@ -2,14 +2,28 @@
 
 <head>
 	<script>
+		function build() {
+			window.addEventListener("message", (message) => {
+				const lhCore = document.createElement("script");
+				lhCore.src = message.data.corePath;
+				document.head.appendChild(lhCore);
+				lhCore.onload = load;
+			});
+		}
 		function load() {
-
+			LHCore.createRoutes([
+				{ url: "subteste", path: "./Hub2.html" },
+			], window);
+			titulo = LHCore.bindVariable("titulo");
+			titulo.value = "Teste1";
+			LHCore.loadHub(window);
 		}
 	</script>
 </head>
 
-<body onload="load()">
-
+<body onload="build()">
+	<b>HUB 1</b>
+	<lh-var titulo></lh-var>
 </body>
 
 </html>
