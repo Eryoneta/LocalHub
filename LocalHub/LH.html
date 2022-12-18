@@ -1,24 +1,59 @@
+<!DOCTYPE html>
 <html>
 
 <head>
 	<title id="title"></title>
 	<link rel="icon" id="icon">
 	</link>
-	<script src="./LHFactory/LHCore/lhcore.js"></script> <!-- Deve ser relativo ao "LH.html"! -->
 	<script>
-		LHCore.createRoutes([
-			{ url: "", path: "./Hub1.html" },
-			{ url: "teste", path: "./Hub2.html" },
-		], window);
+		const lhCoreScriptPath = "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/LHFactory/LHCore/lhcore.js";
+		function build() {
+			const lhCoreScript = document.createElement("script");
+			const thisFilePath = decodeURI(window.location.pathname.substring(1));
+			lhCoreScript.src = getRelativePath(thisFilePath, lhCoreScriptPath);
+			lhCoreScript.onload = () => {
+				LHCore.loadMainHub(window, lhCoreScriptPath);
+				load();
+			};
+			document.head.appendChild(lhCoreScript);
+		}
+		function getRelativePath(absolutePathBase = "", absolutePath = "") {
+			absolutePathBase = absolutePathBase.split("/");
+			absolutePath = absolutePath.split("/");
+			let levelsToReturn = "";
+			let foldersToEnter = "";
+			const fileName = absolutePath[absolutePath.length - 1];
+			for (let i = 0; i < absolutePathBase.length - 1 || i < absolutePath.length - 1; i++) {
+				switch (true) {
+					default:
+						if (absolutePathBase[i] !== absolutePath[i]) {
+							levelsToReturn += "/" + "..";
+							foldersToEnter += "/" + absolutePath[i];
+						}
+						break;
+					case i >= absolutePath.length - 1:
+						levelsToReturn += "/" + "..";
+						break;
+					case i >= absolutePathBase.length - 1:
+						foldersToEnter += "/" + absolutePath[i];
+						break;
+				}
+			}
+			let relativePath = "." + levelsToReturn + foldersToEnter + "/" + fileName;
+			return relativePath;
+		}
 		function load() {
+			LHCore.createRoutes([
+				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub1.html" },
+				{ url: "teste", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub2.html" },
+			]);
 			titulo = LHCore.bindVariable("titulo");
 			titulo.value = "Teste";
-			LHCore.loadMainHub(window);
 		}
 	</script>
 </head>
 
-<body onload="load()">
+<body onload="build()">
 	<lh-var titulo></lh-var>
 	<br>
 	<lh-hub routed></lh-hub>

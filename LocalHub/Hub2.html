@@ -1,22 +1,27 @@
+<!DOCTYPE html>
 <html>
 
 <head>
 	<script>
 		function build() {
 			window.addEventListener("message", (message) => {
-				const lhCore = document.createElement("script");
-				lhCore.src = message.data.corePath;
-				document.head.appendChild(lhCore);
-				lhCore.onload = load;
+				if (!message.data.loadScript) return;
+				const lhCoreScript = document.createElement("script");
+				lhCoreScript.src = message.data.relativeCorePath;
+				lhCoreScript.onload = () => {
+					LHCore.loadHub(window, message.data.absoluteCorePath);
+					load();
+				}
+				document.head.appendChild(lhCoreScript);
 			});
 		}
 		function load() {
 			LHCore.createRoutes([
-				{ url: "subteste", path: "./Hub2.html" },
-			], window);
+				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub2.html" },
+			]);
 			titulo = LHCore.bindVariable("titulo");
 			titulo.value = "Teste2";
-			LHCore.loadHub(window);
+			LHCore.changeTitle("TESTE2");
 		}
 	</script>
 </head>
@@ -24,6 +29,7 @@
 <body onload="build()">
 	<b>HUB 2</b>
 	<lh-var titulo></lh-var>
+	<lh-hub routed></lh-hub>
 </body>
 
 </html>
