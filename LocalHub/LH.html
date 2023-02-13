@@ -14,6 +14,7 @@
 			lhCoreScript.onload = () => {
 				LHCore.loadMainHub(window, lhCoreScriptPath);
 				load();
+				LHCore.redirect(window.location.hash);
 			};
 			document.head.appendChild(lhCoreScript);
 		}
@@ -47,15 +48,24 @@
 				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub1.html" },
 				{ url: "teste", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub2.html" },
 			]);
-			titulo = LHCore.bindVariable("titulo");
-			titulo.value = "Teste";
 		}
 	</script>
+	<style>
+		html,
+		body {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		iframe {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
 </head>
 
 <body onload="build()">
-	<lh-var titulo></lh-var>
-	<br>
 	<lh-hub routed></lh-hub>
 </body>
 

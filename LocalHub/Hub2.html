@@ -5,11 +5,11 @@
 	<script>
 		function build() {
 			window.addEventListener("message", (message) => {
-				if (!message.data.loadScript) return;
+				if (message.data.request!=="loadScript") return;
 				const lhCoreScript = document.createElement("script");
-				lhCoreScript.src = message.data.relativeCorePath;
+				lhCoreScript.src = message.data.content.relativeCorePath;
 				lhCoreScript.onload = () => {
-					LHCore.loadHub(window, message.data.absoluteCorePath);
+					LHCore.loadHub(window, message.data.content.absoluteCorePath);
 					load();
 				}
 				document.head.appendChild(lhCoreScript);
@@ -17,13 +17,21 @@
 		}
 		function load() {
 			LHCore.createRoutes([
-				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub2.html" },
+				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub3.html" },
+				{ url: "subteste", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub4.html" },
+				{ url: "subteste/subsubteste", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub1.html" },
 			]);
 			titulo = LHCore.bindVariable("titulo");
 			titulo.value = "Teste2";
 			LHCore.changeTitle("TESTE2");
 		}
 	</script>
+	<style>
+		body{
+			margin:0px;
+			background-color: yellow;
+		}
+	</style>
 </head>
 
 <body onload="build()">

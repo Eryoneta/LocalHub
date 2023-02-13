@@ -9,7 +9,7 @@
 				const lhCoreScript = document.createElement("script");
 				lhCoreScript.src = message.data.content.relativeCorePath;
 				lhCoreScript.onload = () => {
-					LHCore.loadHub(window, message.data.content.absoluteCorePath,message.data.content.route);
+					LHCore.loadHub(window, message.data.content.absoluteCorePath);
 					load();
 				}
 				document.head.appendChild(lhCoreScript);
@@ -17,28 +17,24 @@
 		}
 		function load() {
 			LHCore.createRoutes([
-				{ url: "", path: "C:/Users/Yo/Mind Mansion/Projects/Software/Web/LocalHub/@Repository/LocalHub/Hub2.html" },
+				{ url: "", path: "" },
 			]);
 			titulo = LHCore.bindVariable("titulo");
-			titulo.value = "Teste1";
-			LHCore.changeTitle("TESTE1");
+			titulo.value = "Teste4";
+			LHCore.changeTitle("TESTE4");
 		}
 	</script>
 	<style>
 		body{
 			margin:0px;
-			background-color: green;
-		}
-		.tt{
-			background-color: red;
+			background-color: cyan;
 		}
 	</style>
 </head>
 
 <body onload="build()">
-	<b>HUB 1</b>
+	<b>HUB 4</b>
 	<lh-var titulo></lh-var>
-	<div class="tt">TESTE</div>
 	<lh-hub routed></lh-hub>
 </body>
 
