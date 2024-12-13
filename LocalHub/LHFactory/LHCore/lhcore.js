@@ -39,17 +39,21 @@ class LHCore {
         const hubPath = LHCore.getRoute(routeAtual);
         const hubs = LHCore.bindHub("routed");
         for (let element of hubs.nativeElements) {
-            const frame = document.createElement("iframe");
-            frame.style.border = "0";
-            frame.scrolling = "no";
-            frame.src = hubPath;
-            // frame.style.visibility="hidden";
-            const corePath = this._getRelativePath(hubPath, this._absoluteFilePath);
-            frame.onload = () => {
-                // frame.style.visibility="visible";
-                this._requestLoadScript(frame.contentWindow, corePath, this._absoluteFilePath, routeAtual);
-            };
-            element.replaceChildren(frame);
+            if(typeof hubPath === 'string'){
+                const frame = document.createElement("iframe");
+                frame.style.border = "0";
+                frame.scrolling = "no";
+                frame.src = hubPath;
+                frame.style.visibility="hidden";
+                const corePath = this._getRelativePath(hubPath, this._absoluteFilePath);
+                frame.onload = () => {
+                    frame.style.visibility="visible";
+                    this._requestLoadScript(frame.contentWindow, corePath, this._absoluteFilePath, routeAtual);
+                };
+                element.replaceChildren(frame);
+            }else{
+                element.style.visibility="visible";
+            }
         }
     }
     static _getCurrentRoute(hash = "") {
